@@ -1,0 +1,24 @@
+body {
+    margin: 0;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.simpletelnet-output {
+    white-space: pre-wrap;
+    background: #000000;
+    color: #d7d7d7;
+    flex: 1 1 auto;
+    overflow-y: scroll;
+    padding: .5em;
+}
+
+.simpletelnet-input {
+    background: #000000;
+    border-top: #333333 solid 5px;
+    color: #d7d7d7;
+    height: 2em;
+}
