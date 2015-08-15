@@ -15,50 +15,50 @@ window.cloudmud = window.cloudmud || {};
       if (that.lowerLayer) {
         that.lowerLayer.send(message);
       }
-		};
+    };
 
-		this.receive = function(message) {
+    this.receive = function(message) {
       if (that.output) {
         that.output.output(message);
       }
-		};
+    };
 
     this.input = function(message) {
       this.send(message);
     }
   }
 
-	terminal.OutputWindow = function(element) {
+  terminal.OutputWindow = function(element) {
     this.terminal = null;
-		this.element = element;
+    this.element = element;
 
-		this.output = function(message) {
-			$(this.element).append(message);
+    this.output = function(message) {
+      $(this.element).append(message);
       $(this.element).scrollTop($(this.element)[0].scrollHeight);
-		}
-	}
+    }
+  }
 
-	terminal.InputWindow = function(element) {
-	  var that = this;
+  terminal.InputWindow = function(element) {
+    var that = this;
 
     this.terminal = null;
 
-		this.element = element;
+    this.element = element;
 
-		$(this.element).keydown(function(e){
-			console.log('Input key pressed: ' + e.keyCode);
-			// If enter is pressed without shift then send the message
-			if(e.keyCode == 13 && !e.shiftKey) {
+    $(this.element).keydown(function(e){
+      console.log('Input key pressed: ' + e.keyCode);
+      // If enter is pressed without shift then send the message
+      if(e.keyCode == 13 && !e.shiftKey) {
         console.log(that);
         var message = $(that.element).val();
         console.log('Terminal Input:' + message);
-				if (that.terminal) {
+        if (that.terminal) {
           that.terminal.input(message + '\r\n');
         }
         $(that.element).val('');
         that.terminal.output.output(message + '\n');
-				e.stopPropagation();
-			}
-		});
-	}
+        e.stopPropagation();
+      }
+    });
+  }
 }(window.cloudmud.terminal = window.cloudmud.terminal || {}, jQuery));
