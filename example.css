@@ -1,0 +1,48 @@
+* {
+	box-sizing: border-box;
+}
+
+.flex-column {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 auto;
+}
+
+.flex-row {
+	display: flex;
+	flex-direction: row;
+	flex: 1 1 auto;
+}
+
+html,
+body,
+#wrapper {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+}
+
+#desc {
+	background: #464646;
+	color: #ccc;
+	flex-basis: 20em;
+	padding: 1em;
+}
+
+.simpletelnet-output {
+    white-space: pre;
+    background: #000000;
+    border-bottom: #333333 solid 5px;
+    color: #d7d7d7;
+    flex: 1 1 auto;
+    overflow-y: scroll;
+    padding: .5em;
+	flex: 1 1 auto;
+}
+
+.simpletelnet-input {
+    background: #000000;
+	border: none;
+    color: #d7d7d7;
+	flex: 0 0 auto;
+}
