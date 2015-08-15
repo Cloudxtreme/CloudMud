@@ -20,9 +20,9 @@ window.cloudmud = window.cloudmud || {};
     'DONT': '\xFE', // 254 Don't
     'IAC': '\xFF' // 255 Interpret as command
   };
-  
-  telnet.options = 
-  
+
+  telnet.options =
+
   telnet.getCodeByValue = function(value) {
     for(code in telnet.codes) {
       if (codes[code] == value) {
@@ -40,12 +40,12 @@ window.cloudmud = window.cloudmud || {};
 		this.sbHandlers = [];
 
 	  var that = this;
-    
+
     this.lowerLayer = null;
     this.higherLayer = null;
-    
+
     this.logger = null;
-    
+
     this.send = function(message) {
       console.log('Telnet Sent:' + message);
       if (that.lowerLayer) {
@@ -53,10 +53,10 @@ window.cloudmud = window.cloudmud || {};
       }
 		};
 
-		this.recieve = function(message) {
-      console.log('Telnet Recieved:' + message);
+		this.receive = function(message) {
+      console.log('Telnet received:' + message);
       if (that.higherLayer) {
-        that.higherLayer.recieve(message);
+        that.higherLayer.receive(message);
       }
 		};
 
@@ -71,7 +71,7 @@ window.cloudmud = window.cloudmud || {};
 		this.defaultDoHandler = function(option) {
 			that.send(telnet.codes.IAC + telnet.codes.DONT + option);
 		};
-    
+
 		this.defaultDontHandler = function(option) {
 			that.send(telnet.codes.IAC + telnet.codes.DONT + option);
 		};
