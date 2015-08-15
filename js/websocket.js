@@ -10,14 +10,16 @@
     this.lowerLayer = null;
     this.higherLayer = null;
 
-		var decoder = new TextDecoder('utf-8');
-
 		this.connect = function (url) {
 			that.socket = new WebSocket(url);
 			that.socket.binaryType = 'arraybuffer';
 			that.connected = true;
 			that.socket.onmessage = function (event) {
-				var message = decoder.decode(new Uint8Array(event.data));
+				var message = "";
+				var bufView = new Uint8Array(event.data);
+				for (var i = 0; i < bufView.length; i++) {
+					message += String.fromCharCode(bufView[i]);
+				}
 				that.receive(message);
 			}
 			that.socket.onerror = function (error) {
@@ -30,12 +32,17 @@
 		}
 
     this.send = function(message) {
-      that.socket.send(message);
-      console.log('Websocket Sent: ' + message);
+			var array = message.split('');
+			for(var i = 0; i < message.length; i++) {
+				array[i] = message.charCodeAt(i);
+			}
+			var view = new Uint8Array(array);
+      that.socket.send( view.buffer );
+			//that.socket.send( message );
 		};
 
 		this.receive = function(message) {
-      console.log('Websocket received: ' + message);
+      //console.log('Websocket received: ' + message);
       if (that.higherLayer) {
         that.higherLayer.receive(message);
       }

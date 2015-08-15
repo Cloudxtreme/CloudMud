@@ -33,11 +33,7 @@ window.cloudmud = window.cloudmud || {};
   };
 
 	telnet.Telnet = function() {
-		this.willHandlers = [];
-		this.wontHandlers = [];
-		this.doHandlers = [];
-		this.dontHandlers = [];
-		this.sbHandlers = [];
+		this.options = {};
 
 	  var that = this;
 
@@ -47,33 +43,150 @@ window.cloudmud = window.cloudmud || {};
     this.logger = null;
 
     this.send = function(message) {
-      console.log('Telnet Sent:' + message);
       if (that.lowerLayer) {
         that.lowerLayer.send(message);
       }
 		};
 
 		this.receive = function(message) {
-      console.log('Telnet received:' + message);
+			var output = "";
+			var option = null;
+			var suboption = null;
+			for (var i = 0; i < message.length; i++) {
+				if(message.charAt(i) == telnet.codes.IAC) {
+					i++;
+					if(i < message.length) {
+						switch(message.charAt(i)) {
+						case telnet.codes.WILL:
+							i++;
+							if(i < message.length) {
+								that.receiveWill(message.charAt(i));
+							}
+							break;
+					  case telnet.codes.WONT:
+							i++;
+							if(i < message.length) {
+								that.receiveWont(message.charAt(i));
+							}
+							break;
+						case telnet.codes.DO:
+							i++;
+							if(i < message.length) {
+								that.receiveDo(message.charAt(i));
+							}
+							break;
+						case telnet.codes.DONT:
+							i++;
+							if(i < message.length) {
+								that.receiveDont(message.charAt(i));
+							}
+							break;
+						case telnet.codes.SB:
+							i++;
+							if(i < message.length) {
+								option = message.charAt(i);
+							}
+							i++;
+							while(true) {
+								if(i >= message.length) {
+									break;
+								}
+								if(message.charAt(i) == telnet.codes.SE) {
+									that.receiveSuboption(option, subobtion);
+									break;
+								} else {
+									suboption += message.charAt(i);
+									i++;
+									continue;
+								}
+							}
+						case telnet.codes.GA:
+							break;
+						}
+					}
+				} else {
+					output += message.charAt(i);
+					//console.log('Output: ' + output);
+				}
+			}
+
       if (that.higherLayer) {
-        that.higherLayer.receive(message);
+        that.higherLayer.receive(output);
       }
 		};
 
 		this.defaultWillHandler = function(option) {
+			console.log('Sent DONT ' + option.charCodeAt(0));
 			that.send(telnet.codes.IAC + telnet.codes.DONT + option);
 		};
 
 		this.defaultWontHandler = function(option) {
+			console.log('Sent DONT ' + option.charCodeAt(0));
 			that.send(telnet.codes.IAC + telnet.codes.DONT + option);
     };
 
 		this.defaultDoHandler = function(option) {
-			that.send(telnet.codes.IAC + telnet.codes.DONT + option);
+			console.log('Sent WONT ' + option.charCodeAt(0));
+			that.send(telnet.codes.IAC + telnet.codes.WONT + option);
 		};
 
 		this.defaultDontHandler = function(option) {
-			that.send(telnet.codes.IAC + telnet.codes.DONT + option);
+			console.log('Sent WONT ' + option.charCodeAt(0));
+			that.send(telnet.codes.IAC + telnet.codes.WONT + option);
 		};
+
+		this.defaultSuboptionHandler = function(option, suboption) {
+			return;
+		}
+
+		this.receiveWill = function(option) {
+			if(that.options.option) {
+				console.log('Recieved WILL ' + that.options.option.codeString);
+				that.options.option.willHandler();
+			} else {
+				console.log('Recieved WILL ' + option.charCodeAt(0));
+				that.defaultWillHandler(option);
+			}
+		}
+
+		this.receiveWont = function(option) {
+			if(that.options.option) {
+				console.log('Recieved WONT ' + that.options.option.codeString);
+				that.options.option.wontHandler();
+			} else {
+				console.log('Recieved WONT ' + option.charCodeAt(0));
+				that.defaultWontHandler(option);
+			}
+		}
+
+		this.receiveDo = function(option) {
+			if(that.options.option) {
+				console.log('Recieved DO ' + that.options.option.codeString);
+				that.options.option.doHandler();
+			} else {
+				console.log('Recieved DO ' + option.charCodeAt(0));
+				that.defaultDoHandler(option);
+			}
+		}
+
+		this.receiveDont = function(option) {
+			if(that.options.option) {
+				console.log('Recieved DONT ' + that.options.option.codeString);
+				that.options.option.dontHandler();
+			} else {
+				console.log('Recieved DONT ' + option.charCodeAt(0));
+				that.defaultDontHandler(option);
+			}
+		}
+
+		this.receiveSuboption = function(option) {
+			if(that.options.option) {
+				console.log('Recieved SB ' + that.options.option.codeString);
+				that.options.option.suboptionHandler();
+			} else {
+				console.log('Recieved SB ' + option.charCodeAt(0));
+				that.defaultSuboptionHandler(option);
+			}
+		}
 	};
 }(window.cloudmud.telnet = window.cloudmud.telnet || {}))

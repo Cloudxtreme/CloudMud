@@ -12,14 +12,12 @@ window.cloudmud = window.cloudmud || {};
     this.higher_layer = null;
 
     this.send = function(message) {
-      console.log('Terminal Sent:' + message);
       if (that.lowerLayer) {
         that.lowerLayer.send(message);
       }
 		};
 
 		this.receive = function(message) {
-      console.log('Terminal received:' + message);
       if (that.output) {
         that.output.output(message);
       }
@@ -58,7 +56,7 @@ window.cloudmud = window.cloudmud || {};
           that.terminal.input(message + '\r\n');
         }
         $(that.element).val('');
-        that.terminal.output.output('\n');
+        that.terminal.output.output(message + '\n');
 				e.stopPropagation();
 			}
 		});
