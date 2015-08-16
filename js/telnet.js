@@ -21,8 +21,6 @@ window.cloudmud = window.cloudmud || {};
     'IAC': '\xFF' // 255 Interpret as command
   };
 
-  telnet.options =
-
   telnet.getCodeByValue = function(value) {
     for(code in telnet.codes) {
       if (codes[code] == value) {
@@ -140,9 +138,10 @@ window.cloudmud = window.cloudmud || {};
     }
 
     this.receiveWill = function(option) {
-      if(that.options.option) {
-        console.log('Recieved WILL ' + that.options.option.codeString);
-        that.options.option.willHandler();
+      console.log('Recieved will:' + option.charCodeAt(0));
+      if(that.options[option]) {
+        console.log('Recieved WILL ' + that.options[option].codeString);
+        that.options[option].willHandler(option);
       } else {
         console.log('Recieved WILL ' + option.charCodeAt(0));
         that.defaultWillHandler(option);
@@ -150,9 +149,9 @@ window.cloudmud = window.cloudmud || {};
     }
 
     this.receiveWont = function(option) {
-      if(that.options.option) {
-        console.log('Recieved WONT ' + that.options.option.codeString);
-        that.options.option.wontHandler();
+      if(that.options[option]) {
+        console.log('Recieved WONT ' + that.options[option].codeString);
+        that.options[option].wontHandler(option);
       } else {
         console.log('Recieved WONT ' + option.charCodeAt(0));
         that.defaultWontHandler(option);
@@ -160,9 +159,9 @@ window.cloudmud = window.cloudmud || {};
     }
 
     this.receiveDo = function(option) {
-      if(that.options.option) {
-        console.log('Recieved DO ' + that.options.option.codeString);
-        that.options.option.doHandler();
+      if(that.options[option]) {
+        console.log('Recieved DO ' + that.options[option].codeString);
+        that.options[option].doHandler(option);
       } else {
         console.log('Recieved DO ' + option.charCodeAt(0));
         that.defaultDoHandler(option);
@@ -170,23 +169,55 @@ window.cloudmud = window.cloudmud || {};
     }
 
     this.receiveDont = function(option) {
-      if(that.options.option) {
-        console.log('Recieved DONT ' + that.options.option.codeString);
-        that.options.option.dontHandler();
+      if(that.options[option]) {
+        console.log('Recieved DONT ' + that.options[option].codeString);
+        that.options[option].dontHandler(option);
       } else {
         console.log('Recieved DONT ' + option.charCodeAt(0));
         that.defaultDontHandler(option);
       }
     }
 
-    this.receiveSuboption = function(option) {
-      if(that.options.option) {
-        console.log('Recieved SB ' + that.options.option.codeString);
-        that.options.option.suboptionHandler();
+    this.receiveSuboption = function(option, suboption) {
+      if(that.options[option]) {
+        console.log('Recieved SB ' + that.options[option].codeString);
+        that.options[option].suboptionHandler(option, suboption);
       } else {
         console.log('Recieved SB ' + option.charCodeAt(0));
-        that.defaultSuboptionHandler(option);
+        that.defaultSuboptionHandler(option, suboption);
       }
+    }
+
+    this.sendDo = function(option) {
+      console.log('Sending IAC DO ' + option);
+      this.send(telnet.codes.IAC + telnet.codes.DO + option);
+    }
+
+    this.sendDont = function(option) {
+      this.send(telnet.codes.IAC + telnet.codes.DONT + option);
+    }
+
+    this.sendWill = function(option) {
+      this.send(telnet.codes.IAC + telnet.codes.WILL + option);
+    }
+
+    this.sendWont = function(option) {
+      this.send(telnet.codes.IAC + telnet.codes.WONT + option);
+    }
+
+    this.sendSuboption = function(option, suboption) {
+      this.send(telnet.codes.IAC + telnet.codes.SB +
+        option + suboption + telnet.codes.SE);
+    }
+
+    this.addOption = function(plugin) {
+      this.options[plugin.code] = plugin;
+      plugin.telnet = this;
+    }
+
+    this.removeOption = function(plugin) {
+      this.options[plugin.code] = null;
+      plugin.telnet = null;
     }
   };
 }(window.cloudmud.telnet = window.cloudmud.telnet || {}))

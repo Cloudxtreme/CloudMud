@@ -46,17 +46,13 @@ window.cloudmud = window.cloudmud || {};
     this.element = element;
 
     $(this.element).keydown(function(e){
-      console.log('Input key pressed: ' + e.keyCode);
       // If enter is pressed without shift then send the message
       if(e.keyCode == 13 && !e.shiftKey) {
-        console.log(that);
         var message = $(that.element).val();
-        console.log('Terminal Input:' + message);
         if (that.terminal) {
           that.terminal.input(message + '\r\n');
         }
         $(that.element).val('');
-        that.terminal.output.output(message + '\n');
         e.stopPropagation();
       }
     });

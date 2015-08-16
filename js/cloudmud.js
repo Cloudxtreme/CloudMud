@@ -1,3 +1,3 @@
 (function(cloudmud, $, undefined) {
 
-}()window.cloudmud = window.cloudmud || {}, jQuery));
+}(window.cloudmud = window.cloudmud || {}, jQuery));

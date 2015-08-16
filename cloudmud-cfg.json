@@ -1,0 +1,18 @@
+{
+  "worlds": [
+    {
+      "name": "Discworld",
+      "url": "ws://discworld.starturle.net",
+      "port": "4243"
+    }
+  ],
+  "protocol-sorting": [
+    "WebSocket",
+    "telnet.Telnet",
+    "Echo",
+    "terminal.Terminal"
+  ],
+  "telnet-options": [
+    "Echo"
+  ]
+}

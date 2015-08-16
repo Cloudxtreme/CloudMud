@@ -32,11 +32,13 @@
     }
 
     this.send = function(message) {
+      console.log(message);
       var array = message.split('');
       for(var i = 0; i < message.length; i++) {
         array[i] = message.charCodeAt(i);
       }
       var view = new Uint8Array(array);
+      console.log(view);
       that.socket.send( view.buffer );
       //that.socket.send( message );
     };
