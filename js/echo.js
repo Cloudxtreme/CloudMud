@@ -32,8 +32,8 @@
 
     this.doHandler = function(option) {
       if(option == this.code && !WILL && this.telnet) {
-        WILL = true;
-        this.telnet.sendWill(option);
+        WILL = false;
+        this.telnet.sendWont(option);
       }
     }
 
