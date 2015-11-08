@@ -138,7 +138,7 @@ window.cloudmud = window.cloudmud || {};
     }
 
     this.receiveWill = function(option) {
-      console.log('Recieved will:' + option.charCodeAt(0));
+      //console.log('Recieved will:' + option.charCodeAt(0));
       if(that.options[option]) {
         console.log('Recieved WILL ' + that.options[option].codeString);
         that.options[option].willHandler(option);
@@ -189,11 +189,20 @@ window.cloudmud = window.cloudmud || {};
     }
 
     this.sendDo = function(option) {
-      console.log('Sending IAC DO ' + option);
+      if(that.options[option]) {
+        console.log('Sending DO ' + that.options[option].codeString);
+      } else {
+        console.log('Sending DO ' + option.charCodeAt(0));
+      }
       this.send(telnet.codes.IAC + telnet.codes.DO + option);
     }
 
     this.sendDont = function(option) {
+      if(that.options[option]) {
+        console.log('Sending DONT ' + that.options[option].codeString);
+      } else {
+        console.log('Sending DONT ' + option.charCodeAt(0));
+      }
       this.send(telnet.codes.IAC + telnet.codes.DONT + option);
     }
 

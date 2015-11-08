@@ -38,6 +38,7 @@ body,
     overflow-y: scroll;
     padding: .5em;
     flex: 1 1 auto;
+    font-family: monospace;
 }
 
 .simpletelnet-input {
@@ -45,6 +46,7 @@ body,
     border: none;
     color: #d7d7d7;
     flex: 0 0 auto;
+    font-family: monospace;
 }
 
 .simpletelnet-output span.echo {
