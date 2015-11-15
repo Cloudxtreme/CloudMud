@@ -1,6 +1,6 @@
 window.cloudmud = window.cloudmud || {};
 
-(function(terminal, $, undefined) {
+(function(terminal, undefined) {
 
   terminal.Terminal = function () {
     var that = this;
@@ -45,7 +45,7 @@ window.cloudmud = window.cloudmud || {};
 
     this.element = element;
 
-    $(this.element).keydown(function(e){
+    $(this.element).keydown(function(e) {
       // If enter is pressed without shift then send the message
       if(e.keyCode == 13 && !e.shiftKey) {
         var message = $(that.element).val();
@@ -57,4 +57,4 @@ window.cloudmud = window.cloudmud || {};
       }
     });
   }
-}(window.cloudmud.terminal = window.cloudmud.terminal || {}, jQuery));
+}(window.cloudmud.terminal = window.cloudmud.terminal || {}));
