@@ -1,0 +1,23 @@
+{
+  "name": "cloudmud",
+  "homepage": "https://github.com/sigilbaram/cloudmud",
+  "authors": [
+    "John S Hobart <sigilbaram@gmail.com>"
+  ],
+  "description": "A HTML5 based mud client.",
+  "main": "",
+  "moduleType": [],
+  "license": "none",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.7",
+    "jquery": "~2.1.4"
+  }
+}
