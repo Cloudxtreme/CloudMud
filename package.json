@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "description": "A web based MUD client.",
   "repository": "https://github.com/sigilbaram/CloudMud",
-  "license": "",
+  "license": "none",
   "devDependencies": {
     "bower": "^1.7.7",
     "http-server": "^0.9.0"
