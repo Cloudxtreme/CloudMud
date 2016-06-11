@@ -1,0 +1,21 @@
+html,
+body {
+    height: 100%;
+}
+
+.ng-isolate-scope {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.ng-isolate-scope > .nav-tabs {
+    flex: auto 0 0;
+}
+
+.ng-isolate-scope > .tab-content,
+.ng-isolate-scope > .tab-content > .tab-pane.active {
+    display: flex;
+    flex-direction: column;
+    flex: 100% 1 1;
+}

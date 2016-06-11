@@ -9,12 +9,14 @@
   <title>CloudMud</title>
 
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="app.css">
+  <link rel="stylesheet" href="world-view/world-view.css">
 </head>
 
 <body>
 <uib-tabset active="active">
-  <uib-tab heading="View"><world-view></world-view></uib-tab>
-  <uib-tab heading="Config"><world-config></world-config></uib-tab>
+  <uib-tab heading="View"><cm-world-view></cm-world-view></uib-tab>
+  <uib-tab heading="Config"><cm-world-config></cm-world-config></uib-tab>
 </uib-tabset>
 
 <script src="bower_components/angular/angular.js"></script>
@@ -22,5 +24,7 @@
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="app.js"></script>
 <script src="app.config.js"></script>
+<script src="world-view/world-view.module.js"></script>
+<script src="world-config/world-config.module.js"></script>
 </body>
 </html>
