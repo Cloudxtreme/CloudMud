@@ -13,7 +13,7 @@ cm-world-view > .world-view-controls {
 
 cm-world-view > .world-view-output {
     background: #000000;
-    color: #c8c8c8;
+    color: #d7d7d7;
     flex: auto 1 1;
     font-family: monospace;
     white-space: pre;
@@ -23,8 +23,8 @@ cm-world-view > .world-view-output {
 cm-world-view > .world-view-input {
     background: #000000;
     border: none;
-    border-top: solid 1px silver;
-    color: #c8c8c8;
+    border-top: solid 3px silver;
+    color: #d7d7d7;
     flex: auto 0 0 ;
     font-family: monospace;
 }

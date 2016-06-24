@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html data-ng-app="cloudMudApp">
+<html>
 <head>
   <meta charset="uft-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,17 +13,19 @@
   <link rel="stylesheet" href="world-view/world-view.css">
 </head>
 
-<body>
-<uib-tabset active="active">
-  <uib-tab heading="View"><cm-world-view></cm-world-view></uib-tab>
-  <uib-tab heading="Config"><cm-world-config></cm-world-config></uib-tab>
-</uib-tabset>
+<body ng-app="cloudMudApp" ng-controler="cloudMudController">
+<div style="display: flex; align-items: stretch; height: 100%;">
+    <div style="display: flex; flex: auto 1 1; flex-direction: column;">
+        <cm-world-view></cm-world-view>
+    </div>
+    <div style="flex: 500px 0 0; padding: 1em;">
+        <cm-world-config></cm-world-config>
+    </div>
+</div>
 
 <script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="app.js"></script>
-<script src="app.config.js"></script>
 <script src="world-view/world-view.module.js"></script>
 <script src="world-config/world-config.module.js"></script>
 </body>
